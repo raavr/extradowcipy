@@ -20,6 +20,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
+import pl.rr.extradowcipy.model.DatabaseManager;
+import pl.rr.extradowcipy.model.db.dbCategory;
+import pl.rr.extradowcipy.model.db.dbFavorite;
+import pl.rr.extradowcipy.model.db.dbJoke;
+
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -32,6 +39,7 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DatabaseManager.init(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -75,6 +83,46 @@ public class MainActivity extends ActionBarActivity
         actionBar.setTitle(mTitle);
     }
 
+    public void createSampleObject() {
+        String c = "O Jasiu";
+        String c1 = "O Malgosi";
+        String j = "Tutaj jakis bardzo smieszny zart";
+        String k = "Tutaj kolejny zarcik";
+        String l = "I jeszcze jeden zart";
+
+        DatabaseManager.getInstance().addCategory(new dbCategory(c));
+        DatabaseManager.getInstance().addCategory(new dbCategory(c1));
+        dbCategory dbCat = DatabaseManager.getInstance().getCategoryByName(c).get(0);
+        dbCategory dbCat2 = DatabaseManager.getInstance().getCategoryByName(c1).get(0);
+
+        DatabaseManager.getInstance().addJoke(new dbJoke(j, dbCat));
+        DatabaseManager.getInstance().addJoke(new dbJoke(k, dbCat));
+        DatabaseManager.getInstance().addJoke(new dbJoke(l, dbCat2));
+
+        dbJoke joke = DatabaseManager.getInstance().getJokeById(0);
+
+        DatabaseManager.getInstance().addFavorite(new dbFavorite(joke));
+
+        List<dbJoke> jokes = DatabaseManager.getInstance().getAllJokes();
+        StringBuilder builder = new StringBuilder();
+        builder.append("Jokes ");
+        for(dbJoke ja : jokes) {
+            builder.append(ja.getContent());
+            builder.append(" ");
+            builder.append(ja.getCategory().getName());
+            builder.append("\n");
+        }
+
+//        List<dbFavorite> favorites = DatabaseManager.getInstance().getAllFavoriteJokes();
+//        builder.append("Ulubione ");
+//        for(dbFavorite fa : favorites) {
+//
+//            builder.append(fa.getJoke().getContent());
+//            builder.append("\n");
+//        }
+
+        Log.d("test_db", "Jokes " + builder.toString());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,6 +146,7 @@ public class MainActivity extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            createSampleObject();
             return true;
         }
 
