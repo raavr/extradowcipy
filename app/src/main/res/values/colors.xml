@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="text_color_primary">#ab000000</color>
 
     <color name="action_bar_background">#ffffff</color>
+
+    <color name="nd_fav_count_background">#5490CC</color>
+    <color name="nd_fav_count_border">#A4C2E0</color>
+    <color name="nd_fav_count_text">#ffffff</color>
+    <color name="nd_background">#ffffff</color>
+    <color name="nd_item_title_text">#ab000000</color>
+    <color name="nd_list_selector">#B3E5FC</color>
 
 </resources>
