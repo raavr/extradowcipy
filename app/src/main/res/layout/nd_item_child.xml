@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ndChildItemLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingLeft="70dp"
+    android:background="@drawable/nd_item_selected">
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/nd_child_title"
+        app:typeface="roboto_light"
+        android:textSize="18sp"
+        android:textColor="@color/nd_item_title_text"
+        android:singleLine="true"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"/>
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/nd_child_counter"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="2"
+        android:background="@drawable/nd_rectangle"
+        app:typeface="roboto_light"
+        android:textColor="@color/nd_fav_count_text"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+</RelativeLayout>

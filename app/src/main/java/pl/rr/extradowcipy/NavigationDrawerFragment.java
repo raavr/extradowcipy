@@ -20,18 +20,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import pl.rr.extradowcipy.ui.ExpandableListAdapter;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements ExpandableListAdapter.OnChildItemClickListener{
 
     /**
      * Remember the position of the selected item.
@@ -47,6 +54,8 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * A pointer to the current callbacks instance (the Activity).
      */
+    private static final int MY_FAVORITE_ITEM_POSITION = 1;
+
     private NavigationDrawerCallbacks mCallbacks;
 
     /**
@@ -55,9 +64,9 @@ public class NavigationDrawerFragment extends Fragment {
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerListView;
+    private ExpandableListView mDrawerListView;
     private View mFragmentContainerView;
-    private NDAdapter mNdAdapter;
+    private ExpandableListAdapter mNdAdapter;
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
@@ -95,28 +104,35 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mDrawerListView = (ListView) inflater.inflate(
+        mDrawerListView = (ExpandableListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
-        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mDrawerListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItem(position);
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                if(groupPosition != MY_FAVORITE_ITEM_POSITION) {
+                    selectItem(groupPosition);
+                    return true;
+                }
+
+                return false;
             }
         });
 
         mTitles = getResources().getStringArray(R.array.nd_items_array);
 
-        List<NDItem> ndItemsList = new ArrayList<NDItem>();
+        List<NDItemGroup> ndItemsList = new ArrayList<NDItemGroup>();
         //ndItemsList.add(new NDItem("Category"));
 
-        ndItemsList.add(new NDItem(mTitles[0], R.drawable.ic_action_labels, 0));
-        ndItemsList.add(new NDItem(mTitles[1], R.drawable.ic_action_favorite, 1));
-        ndItemsList.add(new NDItem(mTitles[2], R.drawable.ic_action_about, 2));
+        ndItemsList.add(new NDItemGroup(mTitles[0], R.drawable.ic_action_labels));
+        ndItemsList.add(new NDItemGroup(mTitles[1], R.drawable.ic_action_favorite));
+        ndItemsList.add(new NDItemGroup(mTitles[2], R.drawable.ic_action_about));
         //ndItemsList.add(new NDItem("My Favorites"));
 
-        mNdAdapter = new NDAdapter(getActivity(),0, ndItemsList);
+       // mNdAdapter = new NDAdapter(getActivity(),0, ndItemsList);
+        mNdAdapter = new ExpandableListAdapter(getActivity(), ndItemsList, this);
         View headerView = inflater.inflate(R.layout.nd_header, null);
         mDrawerListView.addHeaderView(headerView);
+        mDrawerListView.setGroupIndicator(null);
         mDrawerListView.setAdapter(mNdAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
@@ -200,18 +216,19 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void selectItem(int position) {
-        if(position == 0) //header
-            return;
+        //if(position == 0) //header
+            //return;
         mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
         }
-        if (mDrawerLayout != null) {
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
-        }
-        if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(position);
-        }
+            if (mDrawerLayout != null) {
+                mDrawerLayout.closeDrawer(mFragmentContainerView);
+            }
+            if (mCallbacks != null) {
+                mCallbacks.onNavigationDrawerItemSelected(position);
+            }
+
     }
 
     @Override
@@ -277,6 +294,20 @@ public class NavigationDrawerFragment extends Fragment {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
+    public void setMyFavoritesItem(HashMap<String, Integer> favCategoriesCountMap) {
+        NDItemGroup ndItemGroup = (NDItemGroup) mNdAdapter.getGroup(1);
+        ndItemGroup.getChildren().clear();
+        for(Map.Entry<String, Integer> entry : favCategoriesCountMap.entrySet())
+            ndItemGroup.getChildren().add(new NDItemChild(entry.getValue(), entry.getKey()));
+        mNdAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onChildItemClick(String categoryName) {
+        if(mCallbacks != null)
+            mCallbacks.onNavigationDrawerItemSelected(categoryName);
+    }
+
     /**
      * Callbacks interface that all activities using this fragment must implement.
      */
@@ -285,5 +316,6 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+        void onNavigationDrawerItemSelected(String categoryName);
     }
 }

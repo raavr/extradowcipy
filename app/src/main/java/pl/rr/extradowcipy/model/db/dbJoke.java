@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * Created by Rafal on 2015-03-23.
  */
 @DatabaseTable(tableName = "joke")
-public class dbJoke {
+public class DbJoke {
 
     public static final String CATEGORY_ID_FIELD_NAME = "category_id";
 
@@ -18,13 +18,15 @@ public class dbJoke {
     private String content;
 
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = CATEGORY_ID_FIELD_NAME)
-    private dbCategory category;
+    private DbCategory category;
 
+    @DatabaseField(defaultValue = "false")
+    private boolean isFav;
 
-    public dbJoke() {
+    public DbJoke() {
     }
 
-    public dbJoke(String content, dbCategory category) {
+    public DbJoke(String content, DbCategory category) {
         this.content = content;
         this.category = category;
 
@@ -38,11 +40,27 @@ public class dbJoke {
         this.content = content;
     }
 
-    public dbCategory getCategory() {
+    public DbCategory getCategory() {
         return category;
     }
 
-    public void setCategory(dbCategory category) {
+    public void setCategory(DbCategory category) {
         this.category = category;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isFav() {
+        return isFav;
+    }
+
+    public void setFav(boolean isFav) {
+        this.isFav = isFav;
     }
 }

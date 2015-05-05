@@ -1,38 +1,42 @@
 package pl.rr.extradowcipy;
 
-import android.app.Activity;
+import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import pl.rr.extradowcipy.model.Category;
 import pl.rr.extradowcipy.model.DatabaseManager;
-import pl.rr.extradowcipy.model.db.dbCategory;
-import pl.rr.extradowcipy.model.db.dbFavorite;
-import pl.rr.extradowcipy.model.db.dbJoke;
+import pl.rr.extradowcipy.model.Joke;
+import pl.rr.extradowcipy.model.db.DbCategory;
+import pl.rr.extradowcipy.model.db.DbJoke;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+                    CategoriesFragment.OnCategoriesFragmentInteractionListener {
 
+    private static final String PREF_DATABASES_CREATED = "DATABASE_CREATED";
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
+    private CategoriesFragment mCategoriesFragment;
+    private boolean mDatabasesCreated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +46,15 @@ public class MainActivity extends ActionBarActivity
         DatabaseManager.init(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mDatabasesCreated = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(PREF_DATABASES_CREATED, false);
+        if(!mDatabasesCreated) {
+            DatabaseManager.getInstance().fillDatabase();
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(PREF_DATABASES_CREATED, true).apply();
+        }
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+
         mTitle = getTitle();
 
         // Set up the drawer.
@@ -55,23 +65,41 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
+
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position))
-                .commit();
+        onSectionAttached(position);
+        switch (position) {
+              case 0:
+                   fragmentManager.beginTransaction()
+                            .replace(R.id.container, mCategoriesFragment = CategoriesFragment.newInstance())
+                            .commit();
+        }
+
+
+
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(String categoryName) {
+        Observable<DbJoke> observable = null;
+        try {
+            observable = Observable.from(DatabaseManager.getInstance().getFavoriteJokesByCategoryName(categoryName));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        getJokesFromDB(observable);
     }
 
     public void onSectionAttached(int number) {
         String[] titles = getResources().getStringArray(R.array.nd_items_array);
         switch (number) {
-            case 1:
+            case 0:
                 mTitle = titles[0];
                 break;
-            case 2:
+            case 1:
                 mTitle = titles[1];
                 break;
-            case 3:
+            case 2:
                 mTitle = titles[2];
                 break;
         }
@@ -81,47 +109,6 @@ public class MainActivity extends ActionBarActivity
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
-    }
-
-    public void createSampleObject() {
-        String c = "O Jasiu";
-        String c1 = "O Malgosi";
-        String j = "Tutaj jakis bardzo smieszny zart";
-        String k = "Tutaj kolejny zarcik";
-        String l = "I jeszcze jeden zart";
-
-        DatabaseManager.getInstance().addCategory(new dbCategory(c));
-        DatabaseManager.getInstance().addCategory(new dbCategory(c1));
-        dbCategory dbCat = DatabaseManager.getInstance().getCategoryByName(c).get(0);
-        dbCategory dbCat2 = DatabaseManager.getInstance().getCategoryByName(c1).get(0);
-
-        DatabaseManager.getInstance().addJoke(new dbJoke(j, dbCat));
-        DatabaseManager.getInstance().addJoke(new dbJoke(k, dbCat));
-        DatabaseManager.getInstance().addJoke(new dbJoke(l, dbCat2));
-
-        dbJoke joke = DatabaseManager.getInstance().getJokeById(0);
-
-        DatabaseManager.getInstance().addFavorite(new dbFavorite(joke));
-
-        List<dbJoke> jokes = DatabaseManager.getInstance().getAllJokes();
-        StringBuilder builder = new StringBuilder();
-        builder.append("Jokes ");
-        for(dbJoke ja : jokes) {
-            builder.append(ja.getContent());
-            builder.append(" ");
-            builder.append(ja.getCategory().getName());
-            builder.append("\n");
-        }
-
-//        List<dbFavorite> favorites = DatabaseManager.getInstance().getAllFavoriteJokes();
-//        builder.append("Ulubione ");
-//        for(dbFavorite fa : favorites) {
-//
-//            builder.append(fa.getJoke().getContent());
-//            builder.append("\n");
-//        }
-
-        Log.d("test_db", "Jokes " + builder.toString());
     }
 
     @Override
@@ -146,51 +133,104 @@ public class MainActivity extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            createSampleObject();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
+    @Override
+    public void onResume() {
+        mNavigationDrawerFragment.setMyFavoritesItem(getFavoritesJokesCategory());
+        super.onResume();
     }
+
+    @Override
+    public void getCategoriesFromDB() {
+        final List<Category> categories = new ArrayList<>();
+        Observable<DbCategory> observable = Observable.from(DatabaseManager.getInstance().getAllCategory());
+        observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<DbCategory>() {
+                    @Override
+                    public void onCompleted() {
+                        mCategoriesFragment.onSuccessCallback(categories);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(DbCategory dbCat) {
+                        categories.add(new Category(dbCat.getName(), R.drawable.smile));
+                    }
+                });
+    }
+
+    @Override
+    public void onCategoryClick(String categoryName) {
+        Observable<DbJoke> observable = Observable.from(DatabaseManager.getInstance().getJokesByCategoryName(categoryName));
+        getJokesFromDB(observable);
+
+    }
+
+    private void getJokesFromDB(Observable<DbJoke> observable) {
+        final List<Joke> jokes = new ArrayList<>();
+        observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<DbJoke>() {
+                    @Override
+                    public void onCompleted() {
+                        if(jokes.size() == 0)
+                            Toast.makeText(getApplicationContext(), "Brak wynikow wyszukiwania", Toast.LENGTH_SHORT).show();
+                        else
+                            startJokesActivity(jokes);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(DbJoke dbJoke) {
+                        jokes.add(new Joke(dbJoke.getId(), dbJoke.getContent(), new Category(dbJoke.getCategory().getName(), R.drawable.ic_action_favorite), dbJoke.isFav()));
+                    }
+                });
+    }
+
+
+
+    private void startJokesActivity(List<Joke> jokes) {
+        Intent intent = new Intent(this, JokesActivity.class);
+        intent.putParcelableArrayListExtra(JokesActivity.JOKES_INTENT, (ArrayList) jokes);
+        intent.putExtra(JokesActivity.JOKES_CATEGORY_INTENT, jokes.get(0).getCategory().getCategory());
+        startActivity(intent);
+
+    }
+
+    private HashMap<String, Integer> getFavoritesJokesCategory() {
+        HashMap<String, Integer> categoryNameCountMap = new HashMap<>();
+        List<DbCategory> categories = DatabaseManager.getInstance().getAllCategory();
+        for(DbCategory category : categories) {
+            int count = getFavoritesJokesCategoryCount(category);
+            if(count > 0)
+                categoryNameCountMap.put(category.getName(), count);
+        }
+        return  categoryNameCountMap;
+    }
+
+    private int getFavoritesJokesCategoryCount(DbCategory category) {
+        int favCount = 0;
+        try {
+            List<DbJoke> favJokes = DatabaseManager.getInstance().getFavoriteJokesByCategory(category);
+            favCount = favJokes.size();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return favCount;
+    }
+
 
 }

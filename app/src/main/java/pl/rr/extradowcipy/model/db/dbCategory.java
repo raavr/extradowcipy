@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * Created by Rafal on 2015-03-23.
  */
 @DatabaseTable(tableName = "category")
-public class dbCategory {
+public class DbCategory {
 
 
     @DatabaseField(generatedId = true)
@@ -16,11 +16,11 @@ public class dbCategory {
     @DatabaseField
     private String name;
 
-    dbCategory() {
+    DbCategory() {
 
     }
 
-    public dbCategory(String name) {
+    public DbCategory(String name) {
         this.name = name;
     }
 
@@ -30,5 +30,14 @@ public class dbCategory {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        DbCategory category = (DbCategory) o;
+        if(this.getName().equals(category.getName()))
+            return true;
+
+        return false;
     }
 }

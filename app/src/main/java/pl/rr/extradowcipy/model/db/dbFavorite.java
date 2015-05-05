@@ -8,7 +8,7 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 
 @DatabaseTable(tableName = "favorite")
-public class dbFavorite {
+public class DbFavorite {
 
         public static final String JOKE_ID_FIELD_NAME = "joke_id";
 
@@ -16,22 +16,22 @@ public class dbFavorite {
         private int id;
 
         @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = JOKE_ID_FIELD_NAME)
-        private dbJoke joke;
+        private DbJoke joke;
 
 
-        public dbFavorite() {
+        public DbFavorite() {
         }
 
-        public dbFavorite(dbJoke joke) {
+        public DbFavorite(DbJoke joke) {
             this.joke = joke;
 
         }
 
-        public dbJoke getJoke() {
+        public DbJoke getJoke() {
             return joke;
         }
 
-        public void setJoke(dbJoke joke) {
+        public void setJoke(DbJoke joke) {
             this.joke = joke;
         }
 }

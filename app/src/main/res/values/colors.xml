@@ -2,13 +2,17 @@
 <resources>
     <color name="text_color_primary">#ab000000</color>
 
-    <color name="action_bar_background">#ffffff</color>
+    <color name="action_bar_background">#009688</color>
 
-    <color name="nd_fav_count_background">#5490CC</color>
-    <color name="nd_fav_count_border">#A4C2E0</color>
+    <color name="nd_fav_count_background">#009688</color>
+    <color name="nd_fav_count_border">#B2DFDB</color>
     <color name="nd_fav_count_text">#ffffff</color>
     <color name="nd_background">#ffffff</color>
     <color name="nd_item_title_text">#ab000000</color>
-    <color name="nd_list_selector">#B3E5FC</color>
+    <color name="nd_list_selector">#80CBC4</color>
+
+    <color name="categories_background_item">#ffffff</color>
+    <color name="categories_background_border">#dbdbdb</color>
+    <color name="categories_title">#ab000000</color>
 
 </resources>

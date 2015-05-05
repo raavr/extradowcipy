@@ -7,7 +7,8 @@
 
     <ImageView
 
-        android:src="@drawable/default_img1"
+
+        android:background="@color/nd_fav_count_background"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:scaleType="centerCrop"/>
@@ -22,7 +23,7 @@
 
             <ImageView
 
-                android:src="@drawable/infomusic_big5"
+                android:src="@drawable/smile"
                 android:id="@+id/navigation_drawer_header_icon"
                 android:layout_width="64dp"
                 android:layout_height="64dp"/>

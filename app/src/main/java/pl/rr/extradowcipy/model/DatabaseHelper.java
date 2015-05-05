@@ -16,9 +16,9 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
-import pl.rr.extradowcipy.model.db.dbCategory;
-import pl.rr.extradowcipy.model.db.dbFavorite;
-import pl.rr.extradowcipy.model.db.dbJoke;
+import pl.rr.extradowcipy.model.db.DbCategory;
+import pl.rr.extradowcipy.model.db.DbFavorite;
+import pl.rr.extradowcipy.model.db.DbJoke;
 
 /**
  * Created by Rafal on 2014-11-12.
@@ -26,18 +26,16 @@ import pl.rr.extradowcipy.model.db.dbJoke;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final boolean DEBUG = false;
-    // name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "ExtraDowcipy.db";
-    // any time you make changes to your database objects, you may have to increase the database version
     private static final int DATABASE_VERSION = 1;
 
-    // the DAO object we use to access the dbArtist table
-    private Dao<dbCategory, Integer> dbCategoryDao = null;
-    private RuntimeExceptionDao<dbCategory, Integer> dbCateogryRuntimeDao = null;
-    private Dao<dbJoke, Integer> dbJokeDao = null;
-    private RuntimeExceptionDao<dbJoke, Integer> dbJokeRuntimeDao = null;
-    private Dao<dbFavorite, Integer> dbFavoriteDao = null;
-    private RuntimeExceptionDao<dbFavorite, Integer> dbFavoriteRuntimeDao = null;
+    // the DAO objects we use to access the db tables
+    private Dao<DbCategory, Integer> dbCategoryDao = null;
+    private RuntimeExceptionDao<DbCategory, Integer> dbCategoryRuntimeDao = null;
+    private Dao<DbJoke, Integer> dbJokeDao = null;
+    private RuntimeExceptionDao<DbJoke, Integer> dbJokeRuntimeDao = null;
+    private Dao<DbFavorite, Integer> dbFavoriteDao = null;
+    private RuntimeExceptionDao<DbFavorite, Integer> dbFavoriteRuntimeDao = null;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -51,9 +49,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
             if(DEBUG) Log.i(DatabaseHelper.class.getName(), "onCreate");
-            TableUtils.createTable(connectionSource, dbCategory.class);
-            TableUtils.createTable(connectionSource, dbFavorite.class);
-            TableUtils.createTable(connectionSource, dbJoke.class);
+            TableUtils.createTable(connectionSource, DbCategory.class);
+            TableUtils.createTable(connectionSource, DbFavorite.class);
+            TableUtils.createTable(connectionSource, DbJoke.class);
         } catch (SQLException e) {
             if(DEBUG) Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -72,9 +70,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
             if(DEBUG) Log.i(DatabaseHelper.class.getName(), "onUpgrade");
-            TableUtils.dropTable(connectionSource, dbCategory.class, true);
-            TableUtils.dropTable(connectionSource, dbJoke.class, true);
-            TableUtils.dropTable(connectionSource, dbFavorite.class, true);
+            TableUtils.dropTable(connectionSource, DbCategory.class, true);
+            TableUtils.dropTable(connectionSource, DbJoke.class, true);
+            TableUtils.dropTable(connectionSource, DbFavorite.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {
@@ -87,23 +85,23 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      * Returns the Database Access Object (DAO) for our dbArtist class. It will create it or just give the cached
      * value.
      */
-    public Dao<dbCategory, Integer> getCategoryDao() throws SQLException {
+    public Dao<DbCategory, Integer> getCategoryDao() throws SQLException {
         if (dbCategoryDao == null) {
-            dbCategoryDao = getDao(dbCategory.class);
+            dbCategoryDao = getDao(DbCategory.class);
         }
         return dbCategoryDao;
     }
 
-    public Dao<dbJoke, Integer> getJokeDao() throws SQLException {
+    public Dao<DbJoke, Integer> getJokeDao() throws SQLException {
         if (dbJokeDao == null) {
-            dbJokeDao = getDao(dbJoke.class);
+            dbJokeDao = getDao(DbJoke.class);
         }
         return dbJokeDao;
     }
 
-    public Dao<dbFavorite, Integer> getFavoriteDao() throws SQLException {
+    public Dao<DbFavorite, Integer> getFavoriteDao() throws SQLException {
         if (dbFavoriteDao == null) {
-            dbFavoriteDao = getDao(dbFavorite.class);
+            dbFavoriteDao = getDao(DbFavorite.class);
         }
         return dbFavoriteDao;
     }
@@ -112,23 +110,23 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our dbArtist class. It will
      * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
      */
-    public RuntimeExceptionDao<dbCategory, Integer> getdbCategoryDao() {
-        if (dbCateogryRuntimeDao == null) {
-            dbCateogryRuntimeDao = getRuntimeExceptionDao(dbCategory.class);
+    public RuntimeExceptionDao<DbCategory, Integer> getdbCategoryDao() {
+        if (dbCategoryRuntimeDao == null) {
+            dbCategoryRuntimeDao = getRuntimeExceptionDao(DbCategory.class);
         }
-        return dbCateogryRuntimeDao;
+        return dbCategoryRuntimeDao;
     }
 
-    public RuntimeExceptionDao<dbJoke, Integer> getdbJokeDao() {
+    public RuntimeExceptionDao<DbJoke, Integer> getdbJokeDao() {
         if (dbJokeRuntimeDao == null) {
-            dbJokeRuntimeDao = getRuntimeExceptionDao(dbJoke.class);
+            dbJokeRuntimeDao = getRuntimeExceptionDao(DbJoke.class);
         }
         return dbJokeRuntimeDao;
     }
 
-    public RuntimeExceptionDao<dbFavorite, Integer> getdbFavoriteDao() {
+    public RuntimeExceptionDao<DbFavorite, Integer> getdbFavoriteDao() {
         if (dbFavoriteRuntimeDao == null) {
-            dbFavoriteRuntimeDao = getRuntimeExceptionDao(dbFavorite.class);
+            dbFavoriteRuntimeDao = getRuntimeExceptionDao(DbFavorite.class);
         }
         return dbFavoriteRuntimeDao;
     }
@@ -144,7 +142,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         dbJokeDao = null;
         dbJokeRuntimeDao = null;
         dbFavoriteRuntimeDao = null;
-        dbCateogryRuntimeDao = null;
+        dbCategoryRuntimeDao = null;
     }
 }
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/panel_content"
+    android:padding="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/categories_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/jokes_category"
+            android:textColor="@color/categories_title"
+            android:singleLine="true"
+            android:textSize="18sp"
+            app:typeface="roboto_medium"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O Jasiu"/>
+        <ImageView
+            android:id="@+id/add_to_fav_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_not_important"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:src="@drawable/jokes_item_underscore"/>
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/jokes_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="20sp"/>
+
+    <ImageView
+        android:id="@+id/expand_colapse_joke"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_expand"
+        android:visibility="visible"/>
+
+</LinearLayout>
