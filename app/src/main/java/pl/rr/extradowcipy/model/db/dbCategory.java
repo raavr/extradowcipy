@@ -16,12 +16,16 @@ public class DbCategory {
     @DatabaseField
     private String name;
 
+    @DatabaseField
+    private int resId;
+
     DbCategory() {
 
     }
 
-    public DbCategory(String name) {
+    public DbCategory(String name, int resId) {
         this.name = name;
+        this.resId = resId;
     }
 
     public String getName() {
@@ -30,6 +34,14 @@ public class DbCategory {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getResId() {
+        return resId;
+    }
+
+    public void setResId(int resId) {
+        this.resId = resId;
     }
 
     @Override

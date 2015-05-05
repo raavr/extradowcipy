@@ -167,7 +167,7 @@ public class MainActivity extends ActionBarActivity
 
                     @Override
                     public void onNext(DbCategory dbCat) {
-                        categories.add(new Category(dbCat.getName(), R.drawable.smile));
+                        categories.add(new Category(dbCat.getName(), dbCat.getResId()));
                     }
                 });
     }

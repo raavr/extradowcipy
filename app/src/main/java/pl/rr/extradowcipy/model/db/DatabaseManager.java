@@ -10,6 +10,8 @@ import com.j256.ormlite.stmt.UpdateBuilder;
 import java.sql.SQLException;
 import java.util.List;
 
+import pl.rr.extradowcipy.R;
+
 /**
  * Created by Rafal on 2014-11-13.
  */
@@ -136,11 +138,11 @@ public class DatabaseManager {
 
     //TODO
     public void fillDatabase() {
-        DbCategory c1 = new DbCategory("O Jasiu");
-        DbCategory c2 = new DbCategory("O informatykach");
-        DbCategory c3 = new DbCategory("O zwierzetach");
-        DbCategory c4 = new DbCategory("Szkolne");
-        DbCategory c5 = new DbCategory("Rozne");
+        DbCategory c1 = new DbCategory("O Jasiu", R.drawable.boy);
+        DbCategory c2 = new DbCategory("O informatykach", R.drawable.programmer);
+        DbCategory c3 = new DbCategory("O zwierzetach", R.drawable.animal);
+        DbCategory c4 = new DbCategory("Szkolne", R.drawable.school);
+        DbCategory c5 = new DbCategory("Rozne", R.drawable.smile);
         databaseManager.addCategory(c1);
         databaseManager.addCategory(c2);
         databaseManager.addCategory(c3);
