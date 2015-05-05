@@ -167,7 +167,7 @@ public class MainActivity extends ActionBarActivity
 
                     @Override
                     public void onNext(DbCategory dbCat) {
-                        categories.add(new Category(dbCat.getName(), dbCat.getResId()));
+                        categories.add(new Category(dbCat.getName(), getCategoryDrawableById(dbCat.getId())));
                     }
                 });
     }
@@ -236,5 +236,20 @@ public class MainActivity extends ActionBarActivity
         return favCount;
     }
 
+    //tmp
+    private int getCategoryDrawableById(int categoryId) {
+        switch(categoryId) {
+            case 1:
+                return R.drawable.boy;
+            case 2:
+                return R.drawable.programmer;
+            case 3:
+                return R.drawable.animal;
+            case 4:
+                return R.drawable.school;
+            default:
+                return R.drawable.smile;
+        }
+    }
 
 }

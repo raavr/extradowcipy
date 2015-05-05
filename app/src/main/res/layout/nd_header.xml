@@ -8,7 +8,7 @@
     <ImageView
 
 
-        android:background="@color/nd_fav_count_background"
+        android:background="@drawable/default_img"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:scaleType="centerCrop"/>
@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
+        android:visibility="gone"
         android:id="@+id/nd_header"
         android:layout_gravity="center_vertical"
         android:orientation="vertical">

@@ -138,11 +138,11 @@ public class DatabaseManager {
 
     //TODO
     public void fillDatabase() {
-        DbCategory c1 = new DbCategory("O Jasiu", R.drawable.boy);
-        DbCategory c2 = new DbCategory("O informatykach", R.drawable.programmer);
-        DbCategory c3 = new DbCategory("O zwierzetach", R.drawable.animal);
-        DbCategory c4 = new DbCategory("Szkolne", R.drawable.school);
-        DbCategory c5 = new DbCategory("Rozne", R.drawable.smile);
+        DbCategory c1 = new DbCategory("O Jasiu");
+        DbCategory c2 = new DbCategory("O informatykach");
+        DbCategory c3 = new DbCategory("O zwierzetach");
+        DbCategory c4 = new DbCategory("Szkolne");
+        DbCategory c5 = new DbCategory("Rozne");
         databaseManager.addCategory(c1);
         databaseManager.addCategory(c2);
         databaseManager.addCategory(c3);
@@ -159,7 +159,7 @@ public class DatabaseManager {
                 "Nastepnego dnia, w szkole, Jasiu podchodzi do nauczycielki i szepcze:\n" +
                 "- Prosze pani, chce pani latwo zarobic piec zlotych?", c1));
 
-        databaseManager.addJoke(new DbJoke("Jasiu wymien piec zwierzat zyjących w Afryce - mowi nauczycielka.\n" +
+        databaseManager.addJoke(new DbJoke("Jasiu wymien piec zwierzat zyjacych w Afryce - mowi nauczycielka.\n" +
                 "- Dwie malpy i trzy slonie", c1));
 
         databaseManager.addJoke(new DbJoke("Na urodzinach informatyka znajomy daje mu prezent. Otwiera, patrzy, a tam pendrive. Po chwili mowi:\n" +

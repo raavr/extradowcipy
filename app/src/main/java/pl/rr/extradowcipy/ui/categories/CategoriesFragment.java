@@ -79,7 +79,8 @@ public class CategoriesFragment extends BaseFragment implements RecyclerView.OnC
 
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new CategoriesRecyclerAdapter(getActivity(), mCategories);
-        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+        mLayoutManager = new StaggeredGridLayoutManager(getResources().getInteger(R.integer.categories_count), StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(5));
