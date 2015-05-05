@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy.ui;
+package pl.rr.extradowcipy.ui.navdrawer;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,20 +12,20 @@ import com.devspark.robototextview.widget.RobotoTextView;
 
 import java.util.List;
 
-import pl.rr.extradowcipy.NDItemChild;
-import pl.rr.extradowcipy.NDItemGroup;
+import pl.rr.extradowcipy.ui.navdrawer.NDItemChild;
+import pl.rr.extradowcipy.ui.navdrawer.NDItemGroup;
 import pl.rr.extradowcipy.R;
 
 /**
  * Created by Rafal on 2015-04-21.
  */
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
+public class NDExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<NDItemGroup> groups;
     private OnChildItemClickListener mListener;
 
-    public ExpandableListAdapter(Context context, List<NDItemGroup> groups, OnChildItemClickListener listener) {
+    public NDExpandableListAdapter(Context context, List<NDItemGroup> groups, OnChildItemClickListener listener) {
         this.context = context;
         this.groups = groups;
         mListener = listener;

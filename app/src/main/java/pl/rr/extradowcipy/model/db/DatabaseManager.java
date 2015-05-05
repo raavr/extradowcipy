@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy.model;
+package pl.rr.extradowcipy.model.db;
 
 import android.content.Context;
 
@@ -9,10 +9,6 @@ import com.j256.ormlite.stmt.UpdateBuilder;
 
 import java.sql.SQLException;
 import java.util.List;
-
-import pl.rr.extradowcipy.model.db.DbCategory;
-import pl.rr.extradowcipy.model.db.DbFavorite;
-import pl.rr.extradowcipy.model.db.DbJoke;
 
 /**
  * Created by Rafal on 2014-11-13.

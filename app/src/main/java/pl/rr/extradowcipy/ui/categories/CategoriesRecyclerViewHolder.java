@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy.ui;
+package pl.rr.extradowcipy.ui.categories;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

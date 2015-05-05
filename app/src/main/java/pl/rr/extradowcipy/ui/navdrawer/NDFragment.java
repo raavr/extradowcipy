@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy;
+package pl.rr.extradowcipy.ui.navdrawer;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -18,27 +18,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import pl.rr.extradowcipy.ui.ExpandableListAdapter;
+import pl.rr.extradowcipy.R;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment implements ExpandableListAdapter.OnChildItemClickListener{
+public class NDFragment extends Fragment implements NDExpandableListAdapter.OnChildItemClickListener{
 
     /**
      * Remember the position of the selected item.
@@ -66,14 +60,14 @@ public class NavigationDrawerFragment extends Fragment implements ExpandableList
     private DrawerLayout mDrawerLayout;
     private ExpandableListView mDrawerListView;
     private View mFragmentContainerView;
-    private ExpandableListAdapter mNdAdapter;
+    private NDExpandableListAdapter mNdAdapter;
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
     private String[] mTitles;
 
-    public NavigationDrawerFragment() {
+    public NDFragment() {
     }
 
     @Override
@@ -121,15 +115,11 @@ public class NavigationDrawerFragment extends Fragment implements ExpandableList
         mTitles = getResources().getStringArray(R.array.nd_items_array);
 
         List<NDItemGroup> ndItemsList = new ArrayList<NDItemGroup>();
-        //ndItemsList.add(new NDItem("Category"));
-
         ndItemsList.add(new NDItemGroup(mTitles[0], R.drawable.ic_action_labels));
         ndItemsList.add(new NDItemGroup(mTitles[1], R.drawable.ic_action_favorite));
         ndItemsList.add(new NDItemGroup(mTitles[2], R.drawable.ic_action_about));
-        //ndItemsList.add(new NDItem("My Favorites"));
 
-       // mNdAdapter = new NDAdapter(getActivity(),0, ndItemsList);
-        mNdAdapter = new ExpandableListAdapter(getActivity(), ndItemsList, this);
+        mNdAdapter = new NDExpandableListAdapter(getActivity(), ndItemsList, this);
         View headerView = inflater.inflate(R.layout.nd_header, null);
         mDrawerListView.addHeaderView(headerView);
         mDrawerListView.setGroupIndicator(null);

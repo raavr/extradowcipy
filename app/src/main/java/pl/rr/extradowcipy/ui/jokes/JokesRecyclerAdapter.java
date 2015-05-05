@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy.ui;
+package pl.rr.extradowcipy.ui.jokes;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,12 +7,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.OnItemClick;
 import pl.rr.extradowcipy.R;
 import pl.rr.extradowcipy.model.Joke;
 
@@ -57,7 +55,7 @@ public class JokesRecyclerAdapter extends RecyclerView.Adapter<JokesRecyclerView
 
             @Override
             public void onExpandCollapseClick(int position) {
-                expandColapse(position);
+                expandCollapse(position);
             }
         });
     }
@@ -107,7 +105,7 @@ public class JokesRecyclerAdapter extends RecyclerView.Adapter<JokesRecyclerView
         notifyItemChanged(pos);
     }
 
-    public void expandColapse(int pos) {
+    public void expandCollapse(int pos) {
         if(expandItem >= 0)
             notifyItemChanged(expandItem);
         prevExpandItem = expandItem;

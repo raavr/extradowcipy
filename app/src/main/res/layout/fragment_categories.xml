@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.rr.extradowcipy.CategoriesFragment">
+    tools:context="pl.rr.extradowcipy.ui.categories.CategoriesFragment">
 
    <include layout="@layout/progress_bar"/>
 

@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy;
+package pl.rr.extradowcipy.ui.categories;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,31 +7,25 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-
-import com.etsy.android.grid.StaggeredGridView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import pl.rr.extradowcipy.BaseFragment;
+import pl.rr.extradowcipy.R;
 import pl.rr.extradowcipy.model.Category;
-import pl.rr.extradowcipy.ui.CategoriesRecyclerAdapter;
-import pl.rr.extradowcipy.ui.RecyclerItemClickListener;
-import pl.rr.extradowcipy.ui.SpacesItemDecoration;
+import pl.rr.extradowcipy.ui.util.RecyclerItemClickListener;
+import pl.rr.extradowcipy.ui.util.SpacesItemDecoration;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link pl.rr.extradowcipy.CategoriesFragment.OnCategoriesFragmentInteractionListener} interface
+ * {@link CategoriesFragment.OnCategoriesFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link CategoriesFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -96,7 +90,7 @@ public class CategoriesFragment extends BaseFragment implements RecyclerView.OnC
             public void onItemClick(View view, int position) {
                 //mAdapter.removeCategory(position);
                 onCategoryClick(position);
-                //mAdapter.expandColapse(position);
+                //mAdapter.expandCollapse(position);
             }
         }));
 

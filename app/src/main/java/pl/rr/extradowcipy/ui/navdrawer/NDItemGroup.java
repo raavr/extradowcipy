@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy;
+package pl.rr.extradowcipy.ui.navdrawer;
 
 import java.util.ArrayList;
 

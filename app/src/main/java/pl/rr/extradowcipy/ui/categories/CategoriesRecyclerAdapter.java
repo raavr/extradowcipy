@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy.ui;
+package pl.rr.extradowcipy.ui.categories;
 
 import android.app.Activity;
 import android.content.Context;

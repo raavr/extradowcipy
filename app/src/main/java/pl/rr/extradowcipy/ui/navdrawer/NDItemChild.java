@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy;
+package pl.rr.extradowcipy.ui.navdrawer;
 
 /**
  * Created by Rafal on 2015-04-21.

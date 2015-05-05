@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy;
+package pl.rr.extradowcipy.ui.jokes;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -15,10 +15,10 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import pl.rr.extradowcipy.model.DatabaseManager;
+import pl.rr.extradowcipy.R;
+import pl.rr.extradowcipy.model.db.DatabaseManager;
 import pl.rr.extradowcipy.model.Joke;
-import pl.rr.extradowcipy.ui.JokesRecyclerAdapter;
-import pl.rr.extradowcipy.ui.SpacesItemDecoration;
+import pl.rr.extradowcipy.ui.util.SpacesItemDecoration;
 
 
 public class JokesActivity extends ActionBarActivity implements JokesRecyclerAdapter.FavoriteJokeListener{

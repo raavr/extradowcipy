@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy.ui;
+package pl.rr.extradowcipy.ui.jokes;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

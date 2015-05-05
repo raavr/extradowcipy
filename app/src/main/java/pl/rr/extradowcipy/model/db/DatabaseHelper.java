@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy.model;
+package pl.rr.extradowcipy.model.db;
 
 /**
  * Created by Rafal on 2015-03-23.
@@ -15,10 +15,6 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
-
-import pl.rr.extradowcipy.model.db.DbCategory;
-import pl.rr.extradowcipy.model.db.DbFavorite;
-import pl.rr.extradowcipy.model.db.DbJoke;
 
 /**
  * Created by Rafal on 2014-11-12.

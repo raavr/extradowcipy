@@ -1,4 +1,4 @@
-package pl.rr.extradowcipy;
+package pl.rr.extradowcipy.ui.main;
 
 import android.content.Intent;
 import android.preference.PreferenceManager;
@@ -17,11 +17,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import pl.rr.extradowcipy.ui.jokes.JokesActivity;
+import pl.rr.extradowcipy.R;
 import pl.rr.extradowcipy.model.Category;
-import pl.rr.extradowcipy.model.DatabaseManager;
+import pl.rr.extradowcipy.model.db.DatabaseManager;
 import pl.rr.extradowcipy.model.Joke;
 import pl.rr.extradowcipy.model.db.DbCategory;
 import pl.rr.extradowcipy.model.db.DbJoke;
+import pl.rr.extradowcipy.ui.categories.CategoriesFragment;
+import pl.rr.extradowcipy.ui.navdrawer.NDFragment;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,11 +33,11 @@ import rx.schedulers.Schedulers;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        implements NDFragment.NavigationDrawerCallbacks,
                     CategoriesFragment.OnCategoriesFragmentInteractionListener {
 
     private static final String PREF_DATABASES_CREATED = "DATABASE_CREATED";
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private NDFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private CategoriesFragment mCategoriesFragment;
     private boolean mDatabasesCreated;
@@ -52,7 +56,7 @@ public class MainActivity extends ActionBarActivity
             PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(PREF_DATABASES_CREATED, true).apply();
         }
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
+        mNavigationDrawerFragment = (NDFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         mTitle = getTitle();
