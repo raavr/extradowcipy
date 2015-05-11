@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,8 @@ public class JokesRecyclerAdapter extends RecyclerView.Adapter<JokesRecyclerView
 
         if(jokes.get(i).isFav())
             jokesRecyclerViewHolder.favIv.setImageResource(R.drawable.ic_action_important);
+        else
+            jokesRecyclerViewHolder.favIv.setImageResource(R.drawable.ic_action_not_important);
 
         if(expandItem == i) {
             if(expandItem != prevExpandItem) {
