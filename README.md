@@ -1,5 +1,5 @@
 # extradowcipy
-A sample jokes application for Android 2.3+ which uses new widget called Recycler Viewer. Actually this app has 5 categories of polish jokes. You can add your favorites jokes to 'My favorites' and quickly navigate to them using navigation drawer. 
+A sample jokes application for Android 2.3+ which uses new widget called Recycler Viewer. Actually this app has 5 categories of polish jokes. You can add your favorites jokes to 'Moje ulubione' (My favorites) and quickly navigate to them using navigation drawer. 
 
 Libraries
 ---------
